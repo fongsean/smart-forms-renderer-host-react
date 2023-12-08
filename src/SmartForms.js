@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SmartFormsRenderer, getResponse } from '@aehrc/smart-forms-renderer';
+import { SmartFormsRenderer, getResponse, useQuestionnaireResponseStore } from '@aehrc/smart-forms-renderer';
 
 export default function SmartForms() {
 
@@ -806,10 +806,16 @@ export default function SmartForms() {
 
   const [response, setResponse] = useState(initialResponse)
 
+  const updatableResponse =
+      useQuestionnaireResponseStore.use.updatableResponse();
+
   return (
     <div>
+      <div style={{display: "flex"}}>
       <SmartFormsRenderer questionnaire={questionnaire} 
         questionnaireResponse={response ?? undefined}/>
+        <div><pre>{JSON.stringify(updatableResponse, null, 2)}</pre></div>
+      </div>
 
       <div style={{margin: '20px'}}>
         <button onClick={() => {
